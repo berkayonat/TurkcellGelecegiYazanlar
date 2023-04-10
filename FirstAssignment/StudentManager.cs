@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FirstAssignment
 {
-    internal class StudentManager : IStudentManager
+    public class StudentManager : IStudentManager
     {
         private List<Student> _students;
         public StudentManager()

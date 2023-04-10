@@ -11,7 +11,8 @@ class Program
         IStudentManager studentManager = new StudentManager();
         ITeacherManager teacherManager = new TeacherManager();
         ISchoolClassManager schoolClassManager = new SchoolClassManager(teacherManager,studentManager);
-        
+        IAssignmentService assignmentService = new AssignmentService(studentManager);
+
         while (true)
         {
             Console.WriteLine("Please select an option:");
@@ -29,7 +30,8 @@ class Program
             Console.WriteLine("12. Remove teacher");
             Console.WriteLine("13. Remove student");
             Console.WriteLine("14. Remove class");
-            Console.WriteLine("15. Exit");
+            Console.WriteLine("15. Submit assignment");
+            Console.WriteLine("16. Exit");
 
             string option = Console.ReadLine();
 
@@ -78,6 +80,9 @@ class Program
                     RemoveClass(schoolClassManager);
                     break;
                 case "15":
+                    SubmitAssignment(assignmentService);
+                    break;
+                case "16":
                     Console.WriteLine("Exiting the application...");
                     return;
                 default:
@@ -87,6 +92,26 @@ class Program
             Console.WriteLine();
         }
     }
+
+    private static void SubmitAssignment(IAssignmentService assignmentService)
+    {
+        Console.WriteLine("Please enter the ID of the student:");
+        int studentId;
+        if (!int.TryParse(Console.ReadLine(), out studentId) || studentId < 0)
+        {
+            Console.WriteLine("Invalid student ID.");
+            return;
+        }
+        Console.WriteLine("Please enter the name of the assignment:");
+        string assignmentName = Console.ReadLine();
+        if (string.IsNullOrEmpty(assignmentName))
+        {
+            Console.WriteLine("Assignment name cannot be null or empty.");
+            return;
+        }
+        assignmentService.SubmitAssignment(studentId, assignmentName);
+    }
+
     static void AddTeacher(ITeacherManager teacherManager)
     {
         Console.WriteLine("Please enter the name of the teacher:");

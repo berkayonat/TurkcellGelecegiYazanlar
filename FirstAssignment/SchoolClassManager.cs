@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FirstAssignment
 {
-    internal class SchoolClassManager : ISchoolClassManager
+    public class SchoolClassManager : ISchoolClassManager
     {
         private List<SchoolClass> _classes;
         private ITeacherManager _teacherManager;

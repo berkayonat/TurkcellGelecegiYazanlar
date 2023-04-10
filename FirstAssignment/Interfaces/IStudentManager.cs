@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FirstAssignment.Interfaces
 {
-    internal interface IStudentManager
+    public interface IStudentManager
     {
         List<Student> Students { get; }
         void AddStudent(string name);

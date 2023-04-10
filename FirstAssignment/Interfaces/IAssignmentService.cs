@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace FirstAssignment.Interfaces
 {
-    public interface ITeacherManager
+    public interface IAssignmentService
     {
-        List<Teacher> Teachers { get; }
-        void AddTeacher(string name);
-        void RemoveTeacher(int teacherId);
-        void ListTeachers();
+        void SubmitAssignment(int studentId, string assignmentName);
     }
 }
