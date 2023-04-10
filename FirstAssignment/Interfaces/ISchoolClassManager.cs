@@ -11,6 +11,7 @@ namespace FirstAssignment.Interfaces
     {
         void AddClass(string name, int teacherId);
         void AddStudentToClass(int studentId, int classId);
+        public void RemoveStudentFromClass(int studentId, int classId);
         void ListStudentsInClass(SchoolClass schoolClass);
         public void ListSchoolClasses();
         SchoolClass GetClassById(int classIdForList);

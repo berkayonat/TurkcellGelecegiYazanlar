@@ -54,11 +54,36 @@ namespace FirstAssignment
             if (schoolClass.Students == null)
             {
                 schoolClass.Students = new List<Student>();
-            }
+            }         
 
             student.Class = schoolClass;
             schoolClass.Students?.Add(student);
             Console.WriteLine($"{student.Name} has been added to class {schoolClass.Name}.");
+        }
+        public void RemoveStudentFromClass(int studentId, int classId)
+        {
+            var student = _studentManager.Students.FirstOrDefault(s => s.Id == studentId);
+            if (student == null)
+            {
+                Console.WriteLine($"Student with ID {studentId} could not be found.");
+                return;
+            }
+
+            var schoolClass = _classes.FirstOrDefault(c => c.Id == classId);
+            if (schoolClass == null)
+            {
+                Console.WriteLine($"Class with ID {classId} could not be found.");
+                return;
+            }
+            if (!schoolClass.Students.Contains(student))
+            {
+                Console.WriteLine($"Student '{student.Name}' is not in class '{schoolClass.Name}'");
+                return;
+            }
+
+            student.Class = null;
+            schoolClass.Students?.Remove(student);
+            Console.WriteLine($"{student.Name} has been removed to class {schoolClass.Name}.");
         }
 
         public SchoolClass GetClassById(int classIdForList)
@@ -99,8 +124,18 @@ namespace FirstAssignment
             var schoolClass = _classes.FirstOrDefault(t => t.Id == classId);
             if (schoolClass == null)
             {
-                Console.WriteLine($"Teacher with ID {classId} could not be found.");
+                Console.WriteLine($"Class with ID {classId} could not be found.");
                 return;
+            }
+
+            foreach (var student in schoolClass.Students)
+            {
+                student.Class = null;
+            }
+
+            if (schoolClass.Teacher != null)
+            {
+                schoolClass.Teacher.Classes?.Remove(schoolClass);
             }
             _classes.Remove(schoolClass);
             Console.WriteLine($"Class {schoolClass.Name} has been removed.");
