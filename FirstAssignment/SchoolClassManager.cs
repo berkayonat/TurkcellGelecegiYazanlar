@@ -133,9 +133,9 @@ namespace FirstAssignment
                 student.Class = null;
             }
 
-            if (schoolClass.Teacher != null)
+            if (schoolClass.Teacher?.Classes != null)
             {
-                schoolClass.Teacher.Classes?.Remove(schoolClass);
+                schoolClass.Teacher.Classes.Remove(schoolClass);
             }
             _classes.Remove(schoolClass);
             Console.WriteLine($"Class {schoolClass.Name} has been removed.");

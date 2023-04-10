@@ -26,11 +26,18 @@ namespace FirstAssignment
                 Console.WriteLine($"Student with ID {studentId} could not be found.");
                 return;
             }
-            
-            var assignment = new Assignment { Id = _assignments.Count + 1, Name = assignmentName, Teacher = student.Class?.Teacher, Student = student };
+
+            var assignment = new Assignment { Id = _assignments.Count + 1, Name = assignmentName };
+
+            if (student.Class != null && student.Class.Teacher != null)
+            {
+                assignment.Teacher = student.Class.Teacher;
+                student.Class.Teacher.Assignments?.Add(assignment);
+            }
+
+            assignment.Student = student;
             _assignments.Add(assignment);
             student.Assignments?.Add(assignment);
-            student.Class?.Teacher?.Assignments?.Add(assignment);
             Console.WriteLine($"{assignment.Name} has been submitted with ID: {assignment.Id}");
         }
     }
