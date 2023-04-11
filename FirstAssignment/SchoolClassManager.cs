@@ -13,11 +13,13 @@ namespace FirstAssignment
         private List<SchoolClass> _classes;
         private ITeacherManager _teacherManager;
         private IStudentManager _studentManager;
+        private int _classIdCounter;
         public SchoolClassManager(ITeacherManager teacherManager, IStudentManager studentManager)
         {
             _classes = new List<SchoolClass>();
             _teacherManager = teacherManager;
             _studentManager = studentManager;
+            _classIdCounter = 0;
 
         }
         public void AddClass(string name, int teacherId)
@@ -29,7 +31,7 @@ namespace FirstAssignment
                 return;
             }
 
-            var newClass = new SchoolClass { Id = _classes.Count + 1, Name = name, Teacher = teacher };
+            var newClass = new SchoolClass { Id = ++_classIdCounter, Name = name, Teacher = teacher };
             _classes.Add(newClass);
             teacher.Classes?.Add(newClass);
             Console.WriteLine($"{newClass.Name} has been added with ID: {newClass.Id}");

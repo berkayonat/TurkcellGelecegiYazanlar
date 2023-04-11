@@ -11,9 +11,11 @@ namespace FirstAssignment
     public class StudentManager : IStudentManager
     {
         private List<Student> _students;
+        private int _studentIdCounter;
         public StudentManager()
         {
             _students = new List<Student>();
+            _studentIdCounter = 0;
         }
         public List<Student> Students
         {
@@ -22,7 +24,7 @@ namespace FirstAssignment
 
         public void AddStudent(string name)
         {
-            var student = new Student { Id = _students.Count + 1, Name = name };
+            var student = new Student { Id = ++_studentIdCounter, Name = name };
             _students.Add(student);
             Console.WriteLine($"{student.Name} has been added with ID: {student.Id}");
         }

@@ -13,10 +13,12 @@ namespace FirstAssignment
     {
         private List<Assignment> _assignments;
         private IStudentManager _studentManager;
+        private int _assignmentIdCounter;
         public AssignmentService(IStudentManager studentManager) 
         {
             _assignments = new List<Assignment>();
             _studentManager = studentManager;
+            _assignmentIdCounter = 0;
         }
         public void SubmitAssignment(int studentId, string assignmentName)
         {
@@ -27,7 +29,7 @@ namespace FirstAssignment
                 return;
             }
 
-            var assignment = new Assignment { Id = _assignments.Count + 1, Name = assignmentName };
+            var assignment = new Assignment { Id = ++_assignmentIdCounter, Name = assignmentName };
 
             if (student.Class != null && student.Class.Teacher != null)
             {

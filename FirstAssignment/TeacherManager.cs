@@ -11,10 +11,12 @@ namespace FirstAssignment
     public class TeacherManager : ITeacherManager
     {
         private List<Teacher> _teachers;
+        private int _teacherIdCounter;
 
         public TeacherManager()
         {
             _teachers = new List<Teacher>();
+            _teacherIdCounter = 0;
         }
 
         public List<Teacher> Teachers
@@ -24,7 +26,7 @@ namespace FirstAssignment
 
         public void AddTeacher(string name)
         {
-            var teacher = new Teacher { Id = _teachers.Count + 1, Name = name };
+            var teacher = new Teacher { Id = ++_teacherIdCounter, Name = name };
             _teachers.Add(teacher);
             Console.WriteLine($"{teacher.Name} has been added with ID: {teacher.Id}");
         }
