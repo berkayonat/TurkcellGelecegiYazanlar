@@ -58,9 +58,33 @@ namespace Movies.Application
 
             await movieRepository.AddPlayerToMovie(movieId, players);
         }
-        public Task UpdateMovie(UpdateMovieRequest updateMovie)
+        public async Task UpdateMovie(UpdateMovieRequest updateMovie, List<int> players)
         {
-            throw new NotImplementedException();
+            var movie = await movieRepository.GetByIdAsync(updateMovie.Id);
+
+            if (movie == null)
+            {
+                throw new NullReferenceException();
+            }
+            movie.Name = updateMovie.Name;
+            movie.PublishDate = updateMovie.PublishDate;
+            movie.Poster = updateMovie.Poster;
+            movie.Duration = updateMovie.Duration;
+            movie.Rating = updateMovie.Rating;
+            movie.DirectorId = updateMovie.DirectorId;
+
+            // Oyuncuların güncellenmesi
+            movie.Players.Clear();
+            players.ForEach(playerId =>
+            {
+                movie.Players.Add(new MoviesPlayer
+                {
+                    MovieId = movie.Id,
+                    PlayerId = playerId
+                });
+            });
+
+            await movieRepository.UpdateAsync(movie);
         }
     }
 }
